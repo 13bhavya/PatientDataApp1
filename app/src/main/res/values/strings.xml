@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PatientDataApp</string>
+
+    <string name="web_view">Web View</string>
+    <string name="refresh">Refresh</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="id">Id</string>
+
+    <string name="post_patients">Post Patients</string>
+    <string name="get_patients">Get Patients</string>
+    <string name="related_doctor">Related Doctor</string>
+    <string name="department">Department</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="gender">Gender</string>
+    <string name="address">Address</string>
+    <string name="fill_out">Fill out the Patient Details</string>
+    <string name="submitPatient">Submit</string>
+</resources>
