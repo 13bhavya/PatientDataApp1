@@ -2,11 +2,14 @@ package com.example.patientdataapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,21 +26,20 @@ import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Add_Patient extends AppCompatActivity {
+public class Add_Patient_Activity extends AppCompatActivity {
 
-    private static final String TAG = "Add_Patient";
-    InfoAdapterPatient infoAdapterPatient;
+    private static final String TAG = "Add_Patient_Activity";
+
+    public String Firstname, Lastname, Add, Gende, Birth, Depart, relDoctor;
 
     EditText FirstName, LastName, Address, Gender, BirthDate, Department, RelDoctor;
 
     final private String strURLTest = "https://patient-data-management.herokuapp.com/patients";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient);
-
-        infoAdapterPatient = new InfoAdapterPatient(this,R.layout.row_patient);
-        //listViewPatient.setAdapter(infoAdapterPatient);
 
         FirstName = findViewById(R.id.firstName);
         LastName = findViewById(R.id.lastName);
@@ -49,20 +51,28 @@ public class Add_Patient extends AppCompatActivity {
 
     }
 
-    public void submitPatient(View view){
+    public void submitPatient(View view) {
 
-        String Firstname = FirstName.getText().toString();
-        String Lastname = LastName.getText().toString();
-        String Add = Address.getText().toString();
-        String Gende = Gender.getText().toString();
-        String Birth = BirthDate.getText().toString();
-        String Depart = Department.getText().toString();
-        String relDoctor = RelDoctor.getText().toString();
+        Firstname = FirstName.getText().toString();
+        Lastname = LastName.getText().toString();
+        Add = Address.getText().toString();
+        Gende = Gender.getText().toString();
+        Birth = BirthDate.getText().toString();
+        Depart = Department.getText().toString();
+        relDoctor = RelDoctor.getText().toString();
 
-        new PostPatientsTask().onPostExecute(strURLTest);
+        if (Firstname.trim().equals("")) {
+            FirstName.setError("First Name must not be Empty");
 
+        } else if (Lastname.trim().equals("")) {
+            LastName.setError("Last Name must not be Empty");
+
+        } else {
+            Intent intent = new Intent(Add_Patient_Activity.this, PatientListActivity.class);
+            new PostPatientsTask().execute(strURLTest);
+            startActivity(intent);
+        }
     }
-
 
 
     // Post Patients
@@ -70,13 +80,17 @@ public class Add_Patient extends AppCompatActivity {
         protected String doInBackground(String... urls) {
 
 
-
             JSONObject jsonObject = new JSONObject();
             try {
                 //jsonObject.put("title", "post_title");
                 //jsonObject.put("description", "post_description");
-                jsonObject.put("first_name", "Huen");
-                jsonObject.put("last_name", "Oh");
+                jsonObject.put("first_name", Firstname);
+                jsonObject.put("last_name", Lastname);
+                jsonObject.put("address", Add);
+                jsonObject.put("sex", Gende);
+                jsonObject.put("date_of_birth", Birth);
+                jsonObject.put("department", Depart);
+                jsonObject.put("doctor", relDoctor);
             } catch (JSONException e) {
                 Log.d(TAG, e.getLocalizedMessage());
             }
@@ -89,13 +103,12 @@ public class Add_Patient extends AppCompatActivity {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000);
                 conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("Accept","application/json");
+                conn.setRequestProperty("Accept", "application/json");
                 conn.setConnectTimeout(15000);
                 conn.setRequestMethod("POST");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
                 conn.connect();
-
 
 
                 DataOutputStream os = new DataOutputStream(conn.getOutputStream());
@@ -106,17 +119,16 @@ public class Add_Patient extends AppCompatActivity {
 
                 os.flush();
                 os.close();
-                int responseCode=conn.getResponseCode();
+                int responseCode = conn.getResponseCode();
 
                 if (responseCode == HttpsURLConnection.HTTP_OK) {
                     String line;
-                    BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    while ((line=br.readLine()) != null) {
-                        response+=line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        response += line;
                     }
-                }
-                else {
-                    response="";
+                } else {
+                    response = "";
                 }
 
                 conn.disconnect();
@@ -127,14 +139,14 @@ public class Add_Patient extends AppCompatActivity {
             return response;
 
         }
+
         @Override
         protected void onPostExecute(String result) {
 
         }
     }
 
-    private InputStream openHttpConnection(String strURL, String strMethod) throws IOException
-    {
+    private InputStream openHttpConnection(String strURL, String strMethod) throws IOException {
         InputStream in = null;
         int response = -1;
 
@@ -143,7 +155,7 @@ public class Add_Patient extends AppCompatActivity {
 
         if (!(conn instanceof HttpURLConnection))
             throw new IOException("Not an HTTP connection");
-        try{
+        try {
             HttpURLConnection httpConn = (HttpURLConnection) conn;
             httpConn.setAllowUserInteraction(false);
             httpConn.setInstanceFollowRedirects(true);
@@ -153,17 +165,14 @@ public class Add_Patient extends AppCompatActivity {
             if (response == HttpURLConnection.HTTP_OK) {
                 in = httpConn.getInputStream();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Log.d("Networking", ex.getLocalizedMessage());
             throw new IOException("Error connecting");
         }
         return in;
     }
 
-    private String getPatients(String strURL)
-    {
+    private String getPatients(String strURL) {
         InputStream in = null;
         try {
             in = openHttpConnection(strURL, "GET");
@@ -178,8 +187,7 @@ public class Add_Patient extends AppCompatActivity {
             String strLine = "";
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
             StringBuilder stringBuilder = new StringBuilder();
-            while ((strLine = bufferedReader.readLine())!=null)
-            {
+            while ((strLine = bufferedReader.readLine()) != null) {
                 stringBuilder.append(strLine);
                 //listPatient.add(strLine);
             }

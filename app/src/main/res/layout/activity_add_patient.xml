@@ -6,7 +6,7 @@
     android:layout_margin="15sp"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Add_Patient">
+    tools:context=".Add_Patient_Activity">
 
     <TextView
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
 
         <EditText
             android:id="@+id/firstName"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:hint="aaa" />
 
@@ -50,7 +50,7 @@
 
         <EditText
             android:id="@+id/lastName"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -67,7 +67,7 @@
 
         <EditText
             android:id="@+id/PatientAddr"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -84,7 +84,7 @@
 
         <EditText
             android:id="@+id/patientSex"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -101,7 +101,7 @@
 
         <EditText
             android:id="@+id/patientDob"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -117,7 +117,7 @@
 
         <EditText
             android:id="@+id/patientDepart"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -134,7 +134,7 @@
 
         <EditText
             android:id="@+id/patientDoc"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content" />
 
 
@@ -142,8 +142,11 @@
 
     <Button
         android:id="@+id/submitPatient"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="submitPatient"
         android:text="@string/submitPatient"
-        android:layout_width="85dp"
-        android:layout_height="wrap_content"/>
+        android:textColor="#FFFFFF" />
 </LinearLayout>

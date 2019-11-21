@@ -91,8 +91,13 @@ public class PatientListActivity extends AppCompatActivity {
         }
     }
 
+    public void MoreInfoPatient(View view){
+        Intent intent = new Intent(PatientListActivity.this,ShowPatientActivity.class);
+        startActivity(intent);
+    }
+
     public void AddonClick(View view){
-        Intent intent = new Intent(PatientListActivity.this,Add_Patient.class);
+        Intent intent = new Intent(PatientListActivity.this,Add_Patient_Activity.class);
         startActivity(intent);
     }
 

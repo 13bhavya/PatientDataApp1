@@ -14,35 +14,46 @@
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="@string/web_view" />
 
-    <TextView
-        android:id="@+id/showPatient"
-        android:text="@string/refresh"
-        android:textSize="19sp"
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:weightSum="5">
 
-    <Button
-        android:id="@+id/btnPost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickPostPatients"
-        android:text="Post Patients" />
+        <Button
+            android:id="@+id/btnPost"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:onClick="onClickPostPatients"
+            android:layout_weight="2"
+            android:text="@string/post_patients" />
 
-    <Button
-        android:id="@+id/btnGet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickGetPatients"
-        android:text="Get Patients" />
+        <Button
+            android:id="@+id/btnGet"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:onClick="onClickGetPatients"
+            android:layout_weight="2"
+            android:text="@string/get_patients" />
+
+        <ImageView
+            android:id="@+id/addPatient"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:onClick="AddonClick"
+            app:srcCompat="@drawable/plus" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listViewPatient"
         android:layout_margin="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="InvalidId" />
-
 </LinearLayout>
